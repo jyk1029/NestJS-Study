@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { configDotenv } from 'dotenv';
+import { UserModule } from './user/user.module';
+import {User} from "./user/entities/user.entity";
 
 configDotenv({
   path : '../*.env'
@@ -18,15 +20,17 @@ configDotenv({
     ), // confing모듈을 통한 process.env객체 사용
     TypeOrmModule.forRoot({
       type: 'mysql',
-      // .env 파일에서 명시한 네이밍을 이용해 연결 정보를 가져온다.
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [__dirname + '/../**/*.entity.{js.ts}'],
+      entities: ['*/entities/.entity.ts'],
+      autoLoadEntities: true,
       synchronize: true,
-    }),
+      logging: true,
+    }), UserModule,
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AppController],
   providers: [AppService],
