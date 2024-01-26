@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { configDotenv } from 'dotenv';
 import { UserModule } from './user/user.module';
 import {User} from "./user/entities/user.entity";
+import { FeedModule } from './feed/feed.module';
+import {Feed} from "./feed/entities/feed.entity";
 
 configDotenv({
   path : '../*.env'
@@ -30,7 +32,8 @@ configDotenv({
       synchronize: true,
       logging: true,
     }), UserModule,
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Feed]),
+    FeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
