@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import {User} from "./user/entities/user.entity";
 import { FeedModule } from './feed/feed.module';
 import {Feed} from "./feed/entities/feed.entity";
+import { ChatModule } from './chat/chat.module';
 
 configDotenv({
   path : '../*.env'
@@ -34,6 +35,7 @@ configDotenv({
     }), UserModule,
     TypeOrmModule.forFeature([User, Feed]),
     FeedModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
